@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
@@ -16,6 +17,7 @@ import org.apache.poi.xssf.usermodel.*;
  * @author Weslee Brown - wbrown@stonecobra.com
  */
 public class Excel {
+	static Logger log = Logger.getLogger(Excel.class.getName());
 	public Workbook workbook;
 	public Sheet sheet;
 	
@@ -109,12 +111,18 @@ public class Excel {
 				switch(cell.getCellType()){
 				case Cell.CELL_TYPE_BOOLEAN:
 					System.out.print(cell.getBooleanCellValue() + "\t\t");
+					log.info(cell.getBooleanCellValue() + "\t\t");
+					log.error(cell.getBooleanCellValue() + "\t\t");
 					break;
 				case Cell.CELL_TYPE_NUMERIC:
 						System.out.print(cell.getNumericCellValue() + "\t\t");
+						log.info(cell.getNumericCellValue() + "\t\t");
+						log.error(cell.getNumericCellValue() + "\t\t");
 					break;
 				case Cell.CELL_TYPE_STRING:
 					System.out.print(cell.getStringCellValue() + "\t\t");
+					log.info(cell.getStringCellValue() + "\t\t");
+					log.error(cell.getStringCellValue() + "\t\t");
 					break;			
 				case Cell.CELL_TYPE_BLANK:
 					System.out.print("\t\t");
@@ -144,6 +152,8 @@ public class Excel {
 				}
 				catch (IOException e1) {
 					e1.printStackTrace();
+					log.error(e1);
+					log.debug(e1);
 				}
 			}
 			else if(filename.toLowerCase().endsWith("xlsx")) {
@@ -153,10 +163,14 @@ public class Excel {
 				}
 				catch (IOException e2) {
 					e2.printStackTrace();
+					log.error(e2);
+					log.debug(e2);
 				}	
 			}
 		} catch (FileNotFoundException e3) {
 			e3.printStackTrace();
+			log.error(e3);
+			log.debug(e3);
 		}
 		return workbook;
 	}
@@ -168,6 +182,7 @@ public class Excel {
 	public void readExcel(Workbook workbook) {
 		for(int x = 0; x < workbook.getNumberOfSheets(); x++) {
 			System.out.println("Sheet " + ++x);
+			log.info("Sheet " + ++x);
 			x--;
 			iterateEntireSheet(getSheet(workbook,x));
 		}
@@ -185,8 +200,12 @@ public class Excel {
 			out.close();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
+			log.error(e1);
+			log.debug(e1);
 		} catch (IOException e2) {
 			e2.printStackTrace();
+			log.error(e2);
+			log.error(e2);
 		}
 	}
 }
