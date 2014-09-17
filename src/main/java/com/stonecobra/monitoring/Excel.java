@@ -111,18 +111,12 @@ public class Excel {
 				switch(cell.getCellType()){
 				case Cell.CELL_TYPE_BOOLEAN:
 					System.out.print(cell.getBooleanCellValue() + "\t\t");
-					log.info(cell.getBooleanCellValue() + "\t\t");
-					log.error(cell.getBooleanCellValue() + "\t\t");
 					break;
 				case Cell.CELL_TYPE_NUMERIC:
 						System.out.print(cell.getNumericCellValue() + "\t\t");
-						log.info(cell.getNumericCellValue() + "\t\t");
-						log.error(cell.getNumericCellValue() + "\t\t");
 					break;
 				case Cell.CELL_TYPE_STRING:
 					System.out.print(cell.getStringCellValue() + "\t\t");
-					log.info(cell.getStringCellValue() + "\t\t");
-					log.error(cell.getStringCellValue() + "\t\t");
 					break;			
 				case Cell.CELL_TYPE_BLANK:
 					System.out.print("\t\t");
@@ -151,9 +145,7 @@ public class Excel {
 					file.close();
 				}
 				catch (IOException e1) {
-					e1.printStackTrace();
 					log.error(e1);
-					log.debug(e1);
 				}
 			}
 			else if(filename.toLowerCase().endsWith("xlsx")) {
@@ -161,16 +153,12 @@ public class Excel {
 					workbook = new XSSFWorkbook(file);
 					file.close();
 				}
-				catch (IOException e2) {
-					e2.printStackTrace();
-					log.error(e2);
-					log.debug(e2);
+				catch (IOException e2) {	
+					log.error(e2);	
 				}	
 			}
 		} catch (FileNotFoundException e3) {
-			e3.printStackTrace();
-			log.error(e3);
-			log.debug(e3);
+			log.error(e3);	
 		}
 		return workbook;
 	}
@@ -181,8 +169,6 @@ public class Excel {
 	 */
 	public void readExcel(Workbook workbook) {
 		for(int x = 0; x < workbook.getNumberOfSheets(); x++) {
-			System.out.println("Sheet " + ++x);
-			log.info("Sheet " + ++x);
 			x--;
 			iterateEntireSheet(getSheet(workbook,x));
 		}
@@ -199,12 +185,8 @@ public class Excel {
 			workbook.write(out);
 			out.close();
 		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
 			log.error(e1);
-			log.debug(e1);
 		} catch (IOException e2) {
-			e2.printStackTrace();
-			log.error(e2);
 			log.error(e2);
 		}
 	}
